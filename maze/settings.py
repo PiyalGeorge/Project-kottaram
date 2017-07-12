@@ -64,7 +64,7 @@ ROOT_URLCONF = 'maze.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'), ],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates', 'allauth')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -217,7 +217,9 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '-m1nBxEGvMEThjQVSnw7gPlD'
 SOCIAL_AUTH_TWITTER_KEY = 'RRWZkp0FMr0uPfjneiRYl7wFR'
 SOCIAL_AUTH_TWITTER_SECRET = 'CENW4poYuz0UqB6zKBLL1IxmRFmBKplWa7BhncIbh4VeSe2y81'
 
-LOGIN_REDIRECT_URL = '/account/home/'
+LOGIN_REDIRECT_URL = '/'
+
+LOGOUT_REDIRECT_URL = '/account/logout/'
 
 #for google email notification, verification
 EMAIL_USE_TLS = True
