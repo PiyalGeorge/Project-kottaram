@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+{% load i18n %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+Simple Test Page for Shit branch start
+
+{% if request.user.is_authenticated %}
+
+    <h2>{{ request.user }}</h2>
+
+<form method="post" action="{% url 'account_logout' %}">
+  {% csrf_token %}
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+  {% endif %}
+  <button type="submit">{% trans 'Sign Out' %}</button>
+</form>
+
+{% else %}
+
+<a href="{% url 'account_login' %}">sign in</a>
+
+{% endif %}
+
+</body>
+</html>
