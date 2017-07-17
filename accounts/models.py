@@ -1,5 +1,4 @@
 import datetime
-import requests
 
 from allauth.account.signals import user_signed_up
 from django.contrib.auth.models import AbstractUser
@@ -65,14 +64,12 @@ def save_account_details(sender, **kwargs):
                 else:
                     user.gender = 'M'
             if 'birthday' in extra_data:
-                print("birthday",extra_data['birthday'])
                 birthday = extra_data['birthday']
                 user.dob = birthday
             if 'picture' in extra_data:
                 picture = extra_data['picture']
-            name = extra_data['name']
-            if picture:
                 user.profile_picture = picture
+            name = extra_data['name']
             if name:
                 user.nickname = name
             user.save()
