@@ -1,4 +1,5 @@
 import datetime
+import requests
 
 from allauth.account.signals import user_signed_up
 from django.contrib.auth.models import AbstractUser
@@ -36,21 +37,43 @@ class User(AbstractUser):
 @receiver(user_signed_up, sender=User)
 def save_account_details(sender, **kwargs):
     user = kwargs.pop('user')
-    extra_data = user.socialaccount_set.filter(provider='facebook')[0].extra_data
-    gender = extra_data['gender']
-    birthday = extra_data['birthday']
-    id = extra_data['id']
-    name = extra_data['name']
-    if gender == 'female':
-        user.gender = 'F'
-    else:
-        user.gender = 'M'
-    if birthday:
-        user.dob = datetime.date(int(birthday[6:]), int(birthday[:2]), int(birthday[3:5])).strftime("%Y-%m-%d")
-    if id:
-        user.profile_picture = "http://graph.facebook.com/{0}/picture?type=large".format(id)
-    if name:
-        user.nickname = name
-    user.save()
-
+    if user.socialaccount_set.filter(provider='facebook'):
+        extra_data = user.socialaccount_set.filter(provider='facebook')[0].extra_data
+        if extra_data:
+            gender = extra_data['gender']
+            birthday = extra_data['birthday']
+            id = extra_data['id']
+            name = extra_data['name']
+            if gender == 'female':
+                user.gender = 'F'
+            else:
+                user.gender = 'M'
+            if birthday:
+                user.dob = datetime.date(int(birthday[6:]), int(birthday[:2]), int(birthday[3:5])).strftime("%Y-%m-%d")
+            if id:
+                user.profile_picture = "http://graph.facebook.com/{0}/picture?type=large".format(id)
+            if name:
+                user.nickname = name
+            user.save()
+    if user.socialaccount_set.filter(provider='google'):
+        extra_data = user.socialaccount_set.filter(provider='google')[0].extra_data
+        if extra_data:
+            if 'gender' in extra_data:
+                gender = extra_data['gender']
+                if gender == 'female':
+                    user.gender = 'F'
+                else:
+                    user.gender = 'M'
+            if 'birthday' in extra_data:
+                print("birthday",extra_data['birthday'])
+                birthday = extra_data['birthday']
+                user.dob = birthday
+            if 'picture' in extra_data:
+                picture = extra_data['picture']
+            name = extra_data['name']
+            if picture:
+                user.profile_picture = picture
+            if name:
+                user.nickname = name
+            user.save()
 
