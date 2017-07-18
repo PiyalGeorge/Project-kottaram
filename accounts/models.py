@@ -73,4 +73,21 @@ def save_account_details(sender, **kwargs):
             if name:
                 user.nickname = name
             user.save()
-
+    if user.socialaccount_set.filter(provider='twitter'):
+        extra_data = user.socialaccount_set.filter(provider='twitter')[0].extra_data
+        if extra_data:
+            if 'profile_image_url' in extra_data or 'profile_image_url_https' in extra_data:
+                if 'profile_image_url' in extra_data:
+                    picture = extra_data['profile_image_url']
+                    picture = picture.replace('_normal','')
+                    user.profile_picture = picture
+                elif 'profile_image_url_https' in extra_data:
+                    picture = extra_data['profile_image_url_https']
+                    picture = picture.replace('_normal','')
+                    user.profile_picture = picture
+                else:
+                    pass
+            name = extra_data['name']
+            if name:
+                user.nickname = name
+            user.save()
