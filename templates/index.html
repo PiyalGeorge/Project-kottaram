@@ -16,7 +16,7 @@ Simple Test Page for Shitty branch start
     <h2>{{ request.user }}</h2>
 
     {% if request.user.profile_picture %}
-    <img src="{{ request.user.profile_picture }}">
+    <img src="{{ request.user.profile_picture.url }}">
     {% endif %}
 
 <form method="post" action="{% url 'account_logout' %}">
