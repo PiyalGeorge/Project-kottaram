@@ -1,0 +1,75 @@
+﻿{% extends "login-base.html" %}
+
+{% block script %}
+{% endblock %}
+
+{% block content %}
+
+        <div class="container">
+			
+            <div class="col-md-4 col-md-offset-4">
+            <div class="registrationform" style="border-radius: 20px;">
+            <form class="form-horizontal">
+                <fieldset>
+                    <legend><center>Login</center></legend>
+                    <div class="form-group">
+                        <label for="inputEmail" class="col-lg-1 control-label">
+                            </label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" id="inputEmail" placeholder="Email">
+                        </div>
+                    </div>
+					
+                    <div class="form-group">
+                        <label for="inputPassword" class="col-lg-1 control-label">
+                            </label>
+                        <div class="col-lg-10">
+                            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                        </div>
+                    </div>
+					
+                    
+                    
+                    
+                    <div class="form-group">						
+						<center>
+                            <!--<button type="reset" class="btn btn-warning">
+                                Cancel</button>-->
+                            <button type="submit" class="btn btn-primary" style="border-radius: 20px;margin-top: 9px;">
+                                Login</button>
+						</center>
+                    </div>
+					
+					<center><p>Forgot password?</p></center>
+					
+					<hr style="margin-bottom: 11px;margin-top: 8px;"></hr>
+					<center>Or, Login with Social account</center>
+					 <div id="social">
+						<a class="facebookBtn smGlobalBtn" href="/fb/" ></a>
+						<a class="twitterBtn smGlobalBtn" href="#" ></a>
+						<a class="googleplusBtn smGlobalBtn" href="#" ></a>
+					</div>
+	
+					
+					 <hr style="margin-bottom: 11px;"></hr>
+					 <center><p>Don't have an Account? Sign up Now!</p></center>
+					 
+					 <div class="form-group">						
+						<center>
+                            <button type="submit" class="btn btn-primary" style="border-radius: 20px;">
+                            Register</button>
+						</center>
+                    </div>
+					
+					
+                </fieldset>
+            </form>
+         </div>
+
+         </div>
+        </div>
+
+{% endblock %}
+
+{% block extra-script %}
+{% endblock %}
