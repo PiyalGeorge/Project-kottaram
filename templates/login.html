@@ -1,9 +1,16 @@
 ﻿{% extends "login-base.html" %}
 
+{% load staticfiles %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
 {% block script %}
 {% endblock %}
 
 {% block content %}
+
+    {% get_providers as socialaccount_providers %}
 
         <div class="container">
 			
@@ -12,11 +19,17 @@
             <form class="form-horizontal">
                 <fieldset>
                     <legend><center>Login</center></legend>
+
+                    <form method="POST" action="{% url 'account:login' %}">
+                    {% csrf_token %}
+
                     <div class="form-group">
                         <label for="inputEmail" class="col-lg-1 control-label">
                             </label>
                         <div class="col-lg-10">
-                            <input type="text" class="form-control" id="inputEmail" placeholder="Email">
+                            {{ form.email }}
+{#                            <input type="text" class="form-control" id="inputEmail" placeholder="Email">#}
+                            <span id="span_email" class="errormessage"></span>
                         </div>
                     </div>
 					
@@ -24,42 +37,72 @@
                         <label for="inputPassword" class="col-lg-1 control-label">
                             </label>
                         <div class="col-lg-10">
-                            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                            {{ form.password }}
+{#                            <input type="password" class="form-control" id="inputPassword" placeholder="Password">#}
+                            <span id="span_password" class="errormessage"></span>
                         </div>
                     </div>
-					
-                    
-                    
-                    
-                    <div class="form-group">						
+
+                    <div class="form-group">
 						<center>
-                            <!--<button type="reset" class="btn btn-warning">
-                                Cancel</button>-->
-                            <button type="submit" class="btn btn-primary" style="border-radius: 20px;margin-top: 9px;">
+                            <span id="span_button" style="display: block"></span>
+                            <button id="login_button" type="button" class="btn btn-primary" style="border-radius: 20px;margin-top: 9px;">
                                 Login</button>
 						</center>
                     </div>
+
+                    </form>
 					
-					<center><p>Forgot password?</p></center>
+					<a href="{% url 'account_reset_password' %}"><center><p>Forgot password?</p></center></a>
 					
 					<hr style="margin-bottom: 11px;margin-top: 8px;"></hr>
+
+                    {% if socialaccount_providers %}
+
 					<center>Or, Login with Social account</center>
 					 <div id="social">
-						<a class="facebookBtn smGlobalBtn" href="/fb/" ></a>
-						<a class="twitterBtn smGlobalBtn" href="#" ></a>
-						<a class="googleplusBtn smGlobalBtn" href="#" ></a>
+                     {% for provider in socialaccount_providers %}
+
+                         {#                        {% if provider.id == "openid" %}#}
+{#                        {% for brand in provider.get_brands %}#}
+{#                        #}
+{#                          <a title="{{brand.name}}"#}
+{#                             class="socialaccount_provider {{provider.id}} {{brand.id}}"#}
+{#                             href="{% provider_login_url provider.id openid=brand.openid_url process=process %}"#}
+{#                             >{{brand.name}}</a>#}
+{##}
+{#                        {% endfor %}#}
+{#                        {% endif %}#}
+
+{#                        <li>#}
+{#                          <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}"#}
+{#                             href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">{{provider.name}}</a>#}
+{#                        </li>#}
+
+                     {% if provider.name == "Facebook" %}
+                         {% providers_media_js %}
+						<a class="facebookBtn smGlobalBtn" href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"></a>
+                     {% elif provider.name == "Twitter" %}
+						<a class="twitterBtn smGlobalBtn" href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"></a>
+                     {% elif provider.name == "Google" %}
+						<a class="googleplusBtn smGlobalBtn" href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"></a>
+                     {% endif %}
+                     {% endfor %}
 					</div>
-	
+
+                    {% endif %}
 					
 					 <hr style="margin-bottom: 11px;"></hr>
 					 <center><p>Don't have an Account? Sign up Now!</p></center>
-					 
+
+                     <a href="{% url 'account_signup' %}">
 					 <div class="form-group">						
 						<center>
-                            <button type="submit" class="btn btn-primary" style="border-radius: 20px;">
+                            <button class="btn btn-primary" style="border-radius: 20px;">
                             Register</button>
 						</center>
                     </div>
+                    </a>
 					
 					
                 </fieldset>
@@ -72,4 +115,6 @@
 {% endblock %}
 
 {% block extra-script %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="{% static 'js/user_management.js'%}"></script>
 {% endblock %}
