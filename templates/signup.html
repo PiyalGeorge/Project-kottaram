@@ -1,5 +1,7 @@
 ﻿{% extends "login-base.html" %}
 
+{% load staticfiles %}
+
 {% block script %}
 
     <!--datepicker css-->
@@ -33,10 +35,12 @@
                         <label for="inputEmail" class="col-lg-1 control-label">
                             </label>
                         <div class="col-lg-5">
-                            <input type="text" class="form-control" id="inputEmail" placeholder="First name">
+                            <input type="text" class="form-control" id="first_name" placeholder="First name">
+                            <span id="span_first_name" class="errormessage"></span>
                         </div>
 						<div class="col-lg-5">
-                            <input type="text" class="form-control" id="inputEmail" placeholder="Last name">
+                            <input type="text" class="form-control" id="last_name" placeholder="Last name">
+                            <span id="span_last_name" class="errormessage"></span>
                         </div>
                     </div>
 					
@@ -44,7 +48,8 @@
                         <label for="inputEmail" class="col-lg-1 control-label">
                             </label>
                         <div class="col-lg-10">
-                            <input type="text" class="form-control" id="inputEmail" placeholder="Email">
+                            <input type="text" class="form-control" id="email" placeholder="Email">
+                            <span id="span_email" class="errormessage"></span>
                         </div>
                     </div>
 					
@@ -58,14 +63,15 @@
                             <div class="radio">
 								<label><bold>Gender</bold></label>&nbsp;&nbsp;&nbsp;
 								<label>
-                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+                                    <input type="radio" name="genderRadio" id="optionsRadios1" value="M">
                                     Male
                                 </label>&nbsp;&nbsp;&nbsp;
 								<label>
-                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                    <input type="radio" name="genderRadio" id="optionsRadios2" value="F">
                                     Female
                                 </label>
                             </div>
+                            <span id="span_gender" class="errormessage"></span>
                         </div>
                     </div>
 					</center>
@@ -95,9 +101,10 @@
 							</label>
 							<div class="col-lg-7">
 								<div id="datepicker" class="input-group date" data-date-format="dd-mm-yyyy">
-								<input class="form-control" type="text" readonly />
+								<input id="dob" class="form-control" type="text" readonly />
 								<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 								</div>
+                                <span id="span_dob" class="errormessage"></span>
 							</div>
 						</center>
 					</div>
@@ -106,7 +113,8 @@
                         <label for="inputEmail" class="col-lg-1 control-label">
                             </label>
                         <div class="col-lg-10">
-                            <input type="tel" class="form-control" id="inputEmail" placeholder="Mobile number">
+                            <input type="tel" class="form-control" id="mobile_number" placeholder="Mobile number">
+                            <span id="span_mobile_number" class="errormessage"></span>
                         </div>
                     </div>
 	
@@ -114,7 +122,8 @@
                         <label for="inputPassword" class="col-lg-1 control-label">
                             </label>
                         <div class="col-lg-10">
-                            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                            <input type="password" class="form-control" id="password" placeholder="Password">
+                            <span id="span_password" class="errormessage"></span>
                         </div>
                     </div>
 					
@@ -122,13 +131,18 @@
                         <label for="inputPassword" class="col-lg-1 control-label">
                             </label>
                         <div class="col-lg-10">
-                            <input type="password" class="form-control" id="inputPassword" placeholder="Confirm Password">
+                            <input type="password" class="form-control" id="confirm_password" placeholder="Confirm Password">
+                            <span id="span_confirm_password" class="errormessage"></span>
                         </div>
                     </div>
+
+                    <script src='https://www.google.com/recaptcha/api.js'></script>
+                    <div class="g-recaptcha" data-sitekey="6LceuiwUAAAAAKU2kQKSFg8BewAbcopE4y7abUxG"></div>
+                    <span id="span_captcha" class="errormessage"></span>
 					 
 					<div class="form-group">						
 						<center>
-                            <button type="submit" class="btn btn-primary" style="border-radius: 20px;">
+                            <button id="signup_button" type="button" class="btn btn-primary" style="border-radius: 20px;">
                             Sign Up</button>
 						</center>
                     </div>
@@ -146,7 +160,10 @@
 {% endblock %}
 
 {% block extra-script %}
-		
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="{% static 'js/user_management.js'%}"></script>
+
 		<!--Datepicker js and related bootstrap starts-->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
