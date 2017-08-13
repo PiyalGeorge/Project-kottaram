@@ -132,7 +132,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 
 # TIME_ZONE = 'UTC'
-TIME_ZONE =  'Asia/Kolkata'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -142,7 +142,7 @@ USE_TZ = True
 
 DATE_FORMAT = 'N j Y'
 
-DATE_INPUT_FORMATS = ('%d-%m-%Y')
+DATE_INPUT_FORMATS = '%d-%m-%Y'
 
 AUTH_USER_MODEL = 'accounts.User'
 
@@ -232,6 +232,8 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '-m1nBxEGvMEThjQVSnw7gPlD'
 # Twitter key and secret is used, but its simply mentioned below, its actually taken from admin's specification
 SOCIAL_AUTH_TWITTER_KEY = 'RRWZkp0FMr0uPfjneiRYl7wFR'
 SOCIAL_AUTH_TWITTER_SECRET = 'CENW4poYuz0UqB6zKBLL1IxmRFmBKplWa7BhncIbh4VeSe2y81'
+
+GOOGLE_RECAPTCHA_SECRET_KEY = '6LceuiwUAAAAAFGhFjKl5Nt1sdcGcrLwzbIftTXp'
 
 LOGIN_REDIRECT_URL = '/'
 
