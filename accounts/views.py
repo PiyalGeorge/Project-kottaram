@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 from django.http import HttpResponse
 import requests
 import json
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from accounts.forms import MazeLoginForm
 from accounts.models import User
@@ -104,3 +104,14 @@ class SignUpView(TemplateView):
         else:
             ctx['status'] = False
             return HttpResponse(json.dumps({'status': False}), content_type="application/json")
+
+from .tasks import create_random_user_accounts
+
+
+class CeleryView(TemplateView):
+    template_name = 'index.html'
+
+    def get(self, request, *args, **kwargs):
+        total = 10
+        create_random_user_accounts.delay(total)
+        return redirect('home')
