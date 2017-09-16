@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.twitter',
-    'accounts'
+    'accounts',
 ]
 
 SITE_ID = 1
@@ -245,3 +245,26 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'taylorshetti@gmail.com'
 EMAIL_HOST_PASSWORD = 'password6'
 EMAIL_PORT = 587
+
+CELERY_BROKER_URL = 'amqp://localhost'
+#Celery - rabbit server starting stopping and status
+# sudo invoke-rc.d rabbitmq-server start
+# sudo rabbitmqctl stop
+# sudo rabbitmqctl status
+#In another tab with virtualenv activated - run this to start the celery task process command: celery -A maze worker -l info
+
+
+# below code for periodic mail
+#we run command: celery -A maze worker -B -l info
+from celery.schedules import crontab
+
+CELERYBEAT_SCHEDULE = {
+    'context': {
+        'task': 'tasks.send_mail_periodically',
+        'schedule': crontab(minute='*/1'),
+    }
+}
+
+#for Twilio for taylorshetti@gmail.com
+TWILIO_ACCOUNT_SID = "AC7054edc0dca738f47479cac5dc3390f6"
+TWILIO_AUTH_TOKEN = "2083d032aeadd0d16c5b1c7719844e9b"
