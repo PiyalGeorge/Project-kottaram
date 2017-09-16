@@ -15,7 +15,7 @@ timelog.log.3
 *.pyo
 ~*
 *~
-static
+staticfiles
 node_modules/
 geos-3.3.9/
 postgis-2.1.8/
